@@ -43,7 +43,6 @@ std::optional<std::string> dead(Board& chesses, const std::string& color) {
         for (int x = 0; x < 9; ++x) {
             Chess* chess = chesses[y][x];
             if (!chess) continue;
-
             if (chess->color == color) continue;
 
             if (chess->name == L"将" || chess->name == L"帥") {
@@ -52,8 +51,7 @@ std::optional<std::string> dead(Board& chesses, const std::string& color) {
 
             auto steps = get_legal_moves(chesses, chess);
             for (const auto& step : steps) {
-                bool check_result = virtual_move(chesses, chess, step, color).empty();  // 若将军则返回非空
-                if (!check_result) {
+                if (virtual_move(chesses, chess, step, color).empty()) {
                     return std::nullopt;
                 }
             }

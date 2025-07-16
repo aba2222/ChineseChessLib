@@ -37,6 +37,10 @@ PYBIND11_MODULE(chinese_chess_lib, m) {
             Get warnings for the current board state
     )pbdoc");
 
+    m.def("dead", &dead, R"pbdoc(
+            Check if a player is dead (i.e., their king is captured)
+    )pbdoc");
+
 #ifdef VERSION_INFO
     m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
 #else
