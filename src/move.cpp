@@ -37,7 +37,8 @@ std::vector<Move> get_legal_moves(Board& board, Chess* chess, bool flag_) {
     auto ifappend = [&](const Move& step) -> bool {
         if (flag_) {
             std::string color = (chess->color == "#000000") ? "#FF0000" : "#000000";
-            if (/* color in virtual(chesses, chess, step, warn) */ virtual_move(board, chess, step, color).empty()) {
+            std::vector<std::string> result = virtual_move(board, chess, step, color);
+            if (std::find(result.begin(), result.end(), color) != result.end()) {
                 return false;
             }
         }
@@ -67,8 +68,6 @@ std::vector<Move> get_legal_moves(Board& board, Chess* chess, bool flag_) {
         };
 
     std::wstring name = chess->name;
-    std::wcout << L"当前棋子名称: " << name << std::endl;
-	std::wcout << L"当前棋子位置: (" << chess->x << ", " << chess->y << ")" << std::endl;
     if (name == L"将" || name == L"帥") {
         // 将帅走法：上下左右一步且在九宫格内
         static const std::vector<Pos> directions{ {1,0},{-1,0},{0,1},{0,-1} };

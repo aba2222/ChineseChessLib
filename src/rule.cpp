@@ -11,9 +11,7 @@ std::vector<std::string> warn(Board& chesses, const std::string& color) {
         for (int x = 0; x < 9; ++x) {
             Chess* chess = chesses[y][x];
             if (!chess) continue;
-
-            if (!color.empty() && chess->color != color)
-                continue;
+            if (chess->color != color) continue;
 
             std::vector<Move> steps = get_legal_moves(chesses, chess);
             for (const auto& step : steps) {

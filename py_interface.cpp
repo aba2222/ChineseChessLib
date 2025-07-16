@@ -3,6 +3,7 @@
 
 #include <board.h>
 #include <move.h>
+#include <rule.h>
 
 namespace py = pybind11;
 
@@ -17,7 +18,7 @@ PYBIND11_MODULE(chinese_chess_lib, m) {
            :toctree: _generate
 
            get_legal_moves
-           subtract
+           warn
     )pbdoc";
 
     py::class_<Chess>(m, "Chess")
@@ -30,6 +31,10 @@ PYBIND11_MODULE(chinese_chess_lib, m) {
 
     m.def("get_legal_moves", &get_legal_moves, R"pbdoc(
             Get all legal moves for a piece on the board
+    )pbdoc");
+
+    m.def("warn", &warn, R"pbdoc(
+            Get warnings for the current board state
     )pbdoc");
 
 #ifdef VERSION_INFO
