@@ -5,6 +5,10 @@
 #include <move.h>
 #include <rule.h>
 
+#define VERSION_INFO 0.1.0
+#define STRINGIFY(x) #x
+#define MACRO_STRINGIFY(x) STRINGIFY(x)
+
 namespace py = pybind11;
 
 PYBIND11_MODULE(chinese_chess_lib, m) {
