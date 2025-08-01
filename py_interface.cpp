@@ -5,7 +5,7 @@
 #include <move.h>
 #include <rule.h>
 
-#define VERSION_INFO 0.1.0
+#define VERSION_INFO 0.2.0
 #define STRINGIFY(x) #x
 #define MACRO_STRINGIFY(x) STRINGIFY(x)
 
