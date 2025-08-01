@@ -1,17 +1,34 @@
-cmake_minimum_required(VERSION 3.4...3.18)
+# Require CMake 3.15+ (matching scikit-build-core) Use new versions of all
+# policies up to CMake 4.0
+cmake_minimum_required(VERSION 3.15...4.0)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-project(chinese_chess_lib)
+# Scikit-build-core sets these values for you, or you can just hard-code the
+# name and version.
+project(
+  ${SKBUILD_PROJECT_NAME}
+  VERSION ${SKBUILD_PROJECT_VERSION}
+  LANGUAGES CXX)
 
-add_subdirectory(pybind11-3.0.0)
+# Find pybind11 and Python
+find_package(pybind11 CONFIG REQUIRED)
 
-include_directories(${CMAKE_SOURCE_DIR}/include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-pybind11_add_module(chinese_chess_lib py_interface.cpp src/move.cpp src/rule.cpp)
+# Add a library using FindPython's tooling (pybind11 also provides a helper like
+# this)
+python_add_library(_core MODULE
+    py_interface.cpp
+    src/move.cpp
+    src/rule.cpp
+    WITH_SOABI
+)
+target_link_libraries(_core PRIVATE pybind11::headers)
 
-# EXAMPLE_VERSION_INFO is defined by setup.py and passed into the C++ code as a
-# define (VERSION_INFO) here.
-# target_compile_definitions(chinese_chess_lib
-#                           PRIVATE VERSION_INFO=${EXAMPLE_VERSION_INFO})
+# This is passing in the version as a define just as an example
+target_compile_definitions(_core PRIVATE VERSION_INFO=${PROJECT_VERSION})
+
+# The install directory is the output (wheel) directory
+install(TARGETS _core DESTINATION scikit_build_example)
