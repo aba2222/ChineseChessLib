@@ -1,6 +1,7 @@
 #include "rule.h"
 
 #include <set>
+#include <algorithm>
 #include "board.h"
 #include "move.h"
 

@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <optional>
 #include <iostream>
+#include <algorithm>
 
 #include "rule.h"
 
