@@ -26,7 +26,7 @@ PYBIND11_MODULE(chinese_chess_lib, m) {
     )pbdoc";
 
     py::class_<Chess>(m, "Chess")
-        .def(py::init<>())  // Ä¬ÈÏ¹¹Ôìº¯Êý
+        .def(py::init<>())  // é»˜è®¤æž„é€ å‡½æ•°
         .def_readwrite("x", &Chess::x)
         .def_readwrite("y", &Chess::y)
         .def_readwrite("color", &Chess::color)

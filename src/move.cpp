@@ -10,19 +10,19 @@ std::vector<std::string> virtual_move(Board& chesses, Chess* chess, const Move& 
     int dx = std::get<1>(step);
     int dy = std::get<2>(step);
 
-    // ÒÆ¶¯Ç°±£´æÔ­×´Ì¬
+    // ç§»åŠ¨å‰ä¿å­˜åŸçŠ¶æ€
     Chess* temp = chesses[chess->y + dy][chess->x + dx];
     chesses[chess->y][chess->x] = nullptr;
 
-    // Ä£ÄâÒÆ¶¯
+    // æ¨¡æ‹Ÿç§»åŠ¨
     chess->x += dx;
     chess->y += dy;
     chesses[chess->y][chess->x] = chess;
 
-    // µ÷ÓÃ»Øµ÷º¯Êı
+    // è°ƒç”¨å›è°ƒå‡½æ•°
     std::vector<std::string> result = warn(chesses, color);
 
-    // »ØËİ»Ö¸´×´Ì¬
+    // å›æº¯æ¢å¤çŠ¶æ€
     chesses[chess->y][chess->x] = temp;
     chess->x -= dx;
     chess->y -= dy;
@@ -68,8 +68,8 @@ std::vector<Move> get_legal_moves(Board& board, Chess* chess, bool flag_) {
         };
 
     std::wstring name = chess->name;
-    if (name == L"½«" || name == L"›") {
-        // ½«Ë§×ß·¨£ºÉÏÏÂ×óÓÒÒ»²½ÇÒÔÚ¾Å¹¬¸ñÄÚ
+    if (name == L"å°†" || name == L"å¸¥") {
+        // å°†å¸…èµ°æ³•ï¼šä¸Šä¸‹å·¦å³ä¸€æ­¥ä¸”åœ¨ä¹å®«æ ¼å†…
         static const std::vector<Pos> directions{ {1,0},{-1,0},{0,1},{0,-1} };
         for (auto [dx, dy] : directions) {
             int nx = chess->x + dx;
@@ -78,22 +78,22 @@ std::vector<Move> get_legal_moves(Board& board, Chess* chess, bool flag_) {
                 append(dx, dy);
             }
         }
-        // ¡°¼û½«¡±ÅĞ¶¨£¬Ö±Ïß¼ì²â¶ÔÃæ½«
+        // â€œè§å°†â€åˆ¤å®šï¼Œç›´çº¿æ£€æµ‹å¯¹é¢å°†
         int startY = (chess->y <= 2) ? 1 : -1;
         for (int dy = startY; (dy > 0 ? chess->y + dy <= 9 : chess->y + dy >= 0); dy += startY) {
             int ny = chess->y + dy;
             if (ny < 0 || ny > 9) break;
             Chess* target = board[ny][chess->x];
             if (target) {
-                if (target->name == L"½«" || target->name == L"›") {
+                if (target->name == L"å°†" || target->name == L"å¸¥") {
                     append(0, dy, true);
                 }
                 break;
             }
         }
     }
-    else if (name == L"Ê¿" || name == L"ÊË") {
-        // Ê¿×ß·¨£ºĞ±×ßÒ»²½£¬ÏŞÖÆ¾Å¹¬¸ñ
+    else if (name == L"å£«" || name == L"ä»•") {
+        // å£«èµ°æ³•ï¼šæ–œèµ°ä¸€æ­¥ï¼Œé™åˆ¶ä¹å®«æ ¼
         static const std::vector<Pos> directions{ {1,1},{-1,-1},{1,-1},{-1,1} };
         for (auto [dx, dy] : directions) {
             int nx = chess->x + dx;
@@ -103,8 +103,8 @@ std::vector<Move> get_legal_moves(Board& board, Chess* chess, bool flag_) {
             }
         }
     }
-    else if (name == L"Ïó" || name == L"Ïà") {
-        // Ïó×ß·¨£ºÌï×Ö£¬²»ÄÜ¹ıºÓ£¬ÖĞ¼ä²»ÄÜÓĞ×Ó
+    else if (name == L"è±¡" || name == L"ç›¸") {
+        // è±¡èµ°æ³•ï¼šç”°å­—ï¼Œä¸èƒ½è¿‡æ²³ï¼Œä¸­é—´ä¸èƒ½æœ‰å­
         static const std::vector<Pos> directions{ {2,2},{-2,-2},{2,-2},{-2,2} };
         for (auto [dx, dy] : directions) {
             int nx = chess->x + dx;
@@ -118,15 +118,15 @@ std::vector<Move> get_legal_moves(Board& board, Chess* chess, bool flag_) {
             }
         }
     }
-    else if (name == L"Âí" || name == L"ñR") {
-        // Âí×ß·¨£ºÈÕ×Ö£¬ÂíÍÈ²»ÄÜ±»¶Â
+    else if (name == L"é©¬" || name == L"é¦¬") {
+        // é©¬èµ°æ³•ï¼šæ—¥å­—ï¼Œé©¬è…¿ä¸èƒ½è¢«å µ
         static const std::vector<Pos> directions{ {1,2},{1,-2},{-1,2},{-1,-2},{2,1},{-2,1},{2,-1},{-2,-1} };
         for (auto [dx, dy] : directions) {
             int nx = chess->x + dx;
             int ny = chess->y + dy;
             int legX = chess->x + (dx / abs(dx == 0 ? 1 : dx));
             int legY = chess->y + (dy / abs(dy == 0 ? 1 : dy));
-            // ÏÂÃæµÄÂíÍÈÅĞ¶Ï¿É¸ù¾İÊµ¼Ê¹æÔòµ÷Õû
+            // ä¸‹é¢çš„é©¬è…¿åˆ¤æ–­å¯æ ¹æ®å®é™…è§„åˆ™è°ƒæ•´
             int blockX = chess->x + (abs(dx) == 2 ? dx / 2 : 0);
             int blockY = chess->y + (abs(dy) == 2 ? dy / 2 : 0);
             if (nx >= 0 && nx <= 8 && ny >= 0 && ny <= 9) {
@@ -136,8 +136,8 @@ std::vector<Move> get_legal_moves(Board& board, Chess* chess, bool flag_) {
             }
         }
     }
-    else if (name == L"³µ" || name == L"Ü‡") {
-        // ³µ×ß·¨£ºÖ±Ïß£¬Óö×èÍ£Ö¹£¬ÓöµĞ¿É³Ô
+    else if (name == L"è½¦" || name == L"è»Š") {
+        // è½¦èµ°æ³•ï¼šç›´çº¿ï¼Œé‡é˜»åœæ­¢ï¼Œé‡æ•Œå¯åƒ
         for (int dir = 0; dir < 4; ++dir) {
             int dx = (dir == 1) ? -1 : (dir == 3) ? 1 : 0;
             int dy = (dir == 0) ? -1 : (dir == 2) ? 1 : 0;
@@ -157,8 +157,8 @@ std::vector<Move> get_legal_moves(Board& board, Chess* chess, bool flag_) {
             }
         }
     }
-    else if (name == L"ÅÚ" || name == L"³h") {
-        // ÅÚ×ß·¨£ºÖ±Ïß£¬Ô½Ò»¸ö×Ó²ÅÄÜ³Ô
+    else if (name == L"ç‚®" || name == L"ç ²") {
+        // ç‚®èµ°æ³•ï¼šç›´çº¿ï¼Œè¶Šä¸€ä¸ªå­æ‰èƒ½åƒ
         for (int dir = 0; dir < 4; ++dir) {
             int dx = (dir == 1) ? -1 : (dir == 3) ? 1 : 0;
             int dy = (dir == 0) ? -1 : (dir == 2) ? 1 : 0;
@@ -186,9 +186,9 @@ std::vector<Move> get_legal_moves(Board& board, Chess* chess, bool flag_) {
             }
         }
     }
-    else if (name == L"±ø" || name == L"×ä") {
-        // ±ø×ä×ß·¨£¬¹ıºÓÇ°Ö»ÄÜÖ±×ß£¬¹ıºÓºóÄÜ×óÓÒ×ß
-        bool isRed = (name == L"±ø");
+    else if (name == L"å…µ" || name == L"å’") {
+        // å…µå’èµ°æ³•ï¼Œè¿‡æ²³å‰åªèƒ½ç›´èµ°ï¼Œè¿‡æ²³åèƒ½å·¦å³èµ°
+        bool isRed = (name == L"å…µ");
         int forward = isRed ? -1 : 1;
 
         int nx = chess->x;

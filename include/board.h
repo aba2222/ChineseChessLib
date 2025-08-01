@@ -6,12 +6,12 @@
 #include <tuple>
 
 using Pos = std::pair<int, int>;
-using Move = std::tuple<bool, int, int>;  // (ÊÇ·ñ³Ô×Ó, xÆ«ÒÆ, yÆ«ÒÆ)
+using Move = std::tuple<bool, int, int>;  // (æ˜¯å¦åƒå­, xåç§», yåç§»)
 
 struct Chess {
-	int x, y;  // Æå×ÓÎ»ÖÃ
+	int x, y;  // æ£‹å­ä½ç½®
 	std::wstring name;
-	std::string color;  // Æå×ÓÑÕÉ«£¬"#000000"ÎªºÚÉ«£¬"#FF0000"ÎªºìÉ«
+	std::string color;  // æ£‹å­é¢œè‰²ï¼Œ"#000000"ä¸ºé»‘è‰²ï¼Œ"#FF0000"ä¸ºçº¢è‰²
 };
 
 using Board = std::vector<std::vector<Chess*>>;

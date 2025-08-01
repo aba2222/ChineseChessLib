@@ -24,7 +24,7 @@ std::vector<std::string> warn(Board& chesses, const std::string& color) {
                 if (tx < 0 || tx >= 9 || ty < 0 || ty >= 10) continue;
 
                 Chess* target = chesses[ty][tx];
-                if (isCapture && target && (target->name == L"½«" || target->name == L"Ž›")) {
+                if (isCapture && target && (target->name == L"å°†" || target->name == L"å¸¥")) {
                     attackers.insert(chess->color);
                     break;
                 }
@@ -32,7 +32,7 @@ std::vector<std::string> warn(Board& chesses, const std::string& color) {
         }
     }
 
-    // ×ªÎªvector·µ»Ø
+    // è½¬ä¸ºvectorè¿”å›ž
     return std::vector<std::string>(attackers.begin(), attackers.end());
 }
 
@@ -45,7 +45,7 @@ std::optional<std::string> dead(Board& chesses, const std::string& color) {
             if (!chess) continue;
             if (chess->color == color) continue;
 
-            if (chess->name == L"½«" || chess->name == L"Ž›") {
+            if (chess->name == L"å°†" || chess->name == L"å¸¥") {
                 opponent_king_found = true;
             }
 
