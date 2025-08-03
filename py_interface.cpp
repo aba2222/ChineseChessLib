@@ -11,7 +11,7 @@
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(chinese_chess_lib, m) {
+PYBIND11_MODULE(_core, m, py::mod_gil_not_used(), py::multiple_interpreters::per_interpreter_gil()) {
     m.doc() = R"pbdoc(
         Chinese Chess Library
         -----------------------
