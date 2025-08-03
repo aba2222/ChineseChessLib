@@ -5,7 +5,7 @@
 #include <move.h>
 #include <rule.h>
 
-#define VERSION_INFO 0.2.0
+#define VERSION_INFO 0.2.6
 #define STRINGIFY(x) #x
 #define MACRO_STRINGIFY(x) STRINGIFY(x)
 
@@ -23,6 +23,7 @@ PYBIND11_MODULE(chinese_chess_lib, m) {
 
            get_legal_moves
            warn
+           dead
     )pbdoc";
 
     py::class_<Chess>(m, "Chess")
