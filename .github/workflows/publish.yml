@@ -38,7 +38,7 @@ jobs:
           pip install auditwheel
           mkdir -p wheelhouse
           for whl in dist/*.whl; do
-            auditwheel repair "$whl" -w wheelhouse/
+            auditwheel repair "$whl" --plat manylinux_2_28_x86_64 -w wheelhouse/
           done
         shell: bash
 
