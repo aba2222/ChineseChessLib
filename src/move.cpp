@@ -68,8 +68,8 @@ std::vector<Move> get_legal_moves(Board& board, Chess* chess, bool flag_) {
         }
         };
 
-    std::wstring name = chess->name;
-    if (name == L"将" || name == L"帥") {
+    std::string name = chess->name;
+    if (name == "j" || name == "J") {
         // 将帅走法：上下左右一步且在九宫格内
         static const std::vector<Pos> directions{ {1,0},{-1,0},{0,1},{0,-1} };
         for (auto [dx, dy] : directions) {
@@ -86,14 +86,14 @@ std::vector<Move> get_legal_moves(Board& board, Chess* chess, bool flag_) {
             if (ny < 0 || ny > 9) break;
             Chess* target = board[ny][chess->x];
             if (target) {
-                if (target->name == L"将" || target->name == L"帥") {
+                if (target->name == "k" || target->name == "K") {
                     append(0, dy, true);
                 }
                 break;
             }
         }
     }
-    else if (name == L"士" || name == L"仕") {
+    else if (name == "s" || name == "S") {
         // 士走法：斜走一步，限制九宫格
         static const std::vector<Pos> directions{ {1,1},{-1,-1},{1,-1},{-1,1} };
         for (auto [dx, dy] : directions) {
@@ -104,7 +104,7 @@ std::vector<Move> get_legal_moves(Board& board, Chess* chess, bool flag_) {
             }
         }
     }
-    else if (name == L"象" || name == L"相") {
+    else if (name == "x" || name == "X") {
         // 象走法：田字，不能过河，中间不能有子
         static const std::vector<Pos> directions{ {2,2},{-2,-2},{2,-2},{-2,2} };
         for (auto [dx, dy] : directions) {
@@ -119,7 +119,7 @@ std::vector<Move> get_legal_moves(Board& board, Chess* chess, bool flag_) {
             }
         }
     }
-    else if (name == L"马" || name == L"馬") {
+    else if (name == "m" || name == "M") {
         // 马走法：日字，马腿不能被堵
         static const std::vector<Pos> directions{ {1,2},{1,-2},{-1,2},{-1,-2},{2,1},{-2,1},{2,-1},{-2,-1} };
         for (auto [dx, dy] : directions) {
@@ -137,7 +137,7 @@ std::vector<Move> get_legal_moves(Board& board, Chess* chess, bool flag_) {
             }
         }
     }
-    else if (name == L"车" || name == L"車") {
+    else if (name == "c" || name == "C") {
         // 车走法：直线，遇阻停止，遇敌可吃
         for (int dir = 0; dir < 4; ++dir) {
             int dx = (dir == 1) ? -1 : (dir == 3) ? 1 : 0;
@@ -158,7 +158,7 @@ std::vector<Move> get_legal_moves(Board& board, Chess* chess, bool flag_) {
             }
         }
     }
-    else if (name == L"炮" || name == L"砲") {
+    else if (name == "p" || name == "P") {
         // 炮走法：直线，越一个子才能吃
         for (int dir = 0; dir < 4; ++dir) {
             int dx = (dir == 1) ? -1 : (dir == 3) ? 1 : 0;
@@ -187,9 +187,9 @@ std::vector<Move> get_legal_moves(Board& board, Chess* chess, bool flag_) {
             }
         }
     }
-    else if (name == L"兵" || name == L"卒") {
+    else if (name == "b" || name == "B") {
         // 兵卒走法，过河前只能直走，过河后能左右走
-        bool isRed = (name == L"兵");
+        bool isRed = (name == "B");
         int forward = isRed ? -1 : 1;
 
         int nx = chess->x;
@@ -209,7 +209,7 @@ std::vector<Move> get_legal_moves(Board& board, Chess* chess, bool flag_) {
         }
     }
     else {
-        throw std::invalid_argument("Invalid chess piece name");
+        throw std::invalid_argument("Invalid chess piece name" + name);
     }
 
     return pos;

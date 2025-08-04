@@ -25,7 +25,7 @@ std::vector<std::string> warn(Board& chesses, const std::string& color) {
                 if (tx < 0 || tx >= 9 || ty < 0 || ty >= 10) continue;
 
                 Chess* target = chesses[ty][tx];
-                if (isCapture && target && (target->name == L"将" || target->name == L"帥")) {
+                if (isCapture && target && (target->name == "j" || target->name == "J")) {
                     attackers.insert(chess->color);
                     break;
                 }
@@ -46,7 +46,7 @@ std::optional<std::string> dead(Board& chesses, const std::string& color) {
             if (!chess) continue;
             if (chess->color == color) continue;
 
-            if (chess->name == L"将" || chess->name == L"帥") {
+            if (chess->name == "j" || chess->name == "J") {
                 opponent_king_found = true;
             }
 
